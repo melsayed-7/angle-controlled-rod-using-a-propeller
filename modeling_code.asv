@@ -43,11 +43,11 @@ end
 
 
 plot(t,data);
-ts = 17/500;
+ts = 1
 
 %%
-data1 = iddata(data',[zeros(1,floor(4/ts)) ones(1,(557-floor(4/ts)))]',.034);
+data1 = iddata(data',[zeros(1,4/0.034)ones(1,length(data))',.034);
 
-g = tfest(data1,3,1);
+g = tfest(data1,3,0);
 
 
