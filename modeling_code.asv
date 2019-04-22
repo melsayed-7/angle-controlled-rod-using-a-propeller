@@ -1,9 +1,0 @@
-
-plot(t,data);
-ts = 17/500;  % this is the sampling time it is computed from the array t
-
-data1 = iddata(data',[zeros(1,floor(4/ts)) ones(1,(557-floor(4/ts)))]',.034);  % this is processing the data to make it compatible with the trandestimation funciton
-
-g = tfest(data1,3,1);
-
-
