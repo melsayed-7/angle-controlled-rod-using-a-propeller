@@ -1,8 +1,23 @@
+clear
+clc
+close all
 
-plot(t,data);
-ts = 17/500;  % this is the sampling time it is computed from the array t
+a=csvread('4.csv');
+b=csvread('5.csv');
+%  figure 
+%  plot(a(:,2));
+% hold on
+%  plot(a(:,1));
+% figure
 
-data1 = iddata(data(1:543)',input_2',.034);  % this is processing the data to make it compatible with the transfer-function estimation funciton
+% 
+% plot(b(:,1));
+% figure
+% plot(b(:,2));
+
+ts = .01;  % this is the sampling time it is computed from the array t
+
+data1 = iddata(a(:,2),a(:,1),ts);  % this is processing the data to make it compatible with the transfer-function estimation funciton
 
 g = tfest(data1,2,0);   % getting the transfer function and storing it in g
   
@@ -11,5 +26,9 @@ g = tfest(data1,2,0);   % getting the transfer function and storing it in g
 % fifth order
 transfer_fn = tf([g.Numerator],[g.Denominator])
 x = step(transfer_fn)
+figure 
 plot(x)
+
+ figure 
+ plot(a(:,2)(1:162));
 

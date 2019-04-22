@@ -1,0 +1,13 @@
+clear
+clc
+close all
+a=csvread('4.csv');
+b=csvread('5.csv');
+figure 
+plot(a(:,1));
+figure
+plot(a(:,2));
+
+plot(a(:,1));
+figure
+plot(a(:,2));
