@@ -7,25 +7,25 @@ Servo esc;  //Declare the ESC as a Servo Object
 double Kp= 12;
 double Ki= 11;
 double Kd=0;
-// the reading below are the ones obained from previous attempts
+
 /*
 double Kp= 16.5;
-double Ki=5;
+double Ki=.0;
 double Kd=0;
-
+/*
+/*
+// the PID factors
 double Kp= 15.60977;
 double Ki= 48.2337;
 double Kd= 0;
 */
+double error = 1;
+double memory_error= 0;
 
-double error = 1;             //the signla rerror variable
-double memory_error= 0;       // the error of the previous iteration
+double int_error=0;
+double diff_error=0;
 
-float int_error=0;    //integral error
-float diff_error=0;   //differential error
-
-float controller=0;   //controller signal
-
+double controller=0;//controller signal
 
 double Ts=.01;
 double goal=15;
@@ -69,7 +69,12 @@ void loop() {
    
   //PID digital PID
   
-
+T1 = micros();//
+    /*
+    current_angle=analogRead(A1)- init_angle;    
+    current_angle=map(current_angle,0,1203,0,40);
+    */
+    
      Serial.print("angle read:");
      angle=(init_angle-analogRead(A1));                      //Value of input is analog input on pin A1 (on the bodey)
      angle=map(angle,0.0,164.0,0.0,37.476);
@@ -77,14 +82,24 @@ void loop() {
      Serial.print(" | ");
      
      myPID.Compute();
-
-    Serial.print("controller signal:");      //Serial print the original input value
-    Serial.print(output);
-    Serial.print(" | ");
+  
+     /*
+      error= goal - angle;
+      int_error += error*Ts ;
+      diff_error= (error-memory_error)/Ts;
+      memory_error=diff_error;
       
-    Serial.print("\n");
+      controller = error*KP + KI*int_error +  diff_error*KD;
+      */
+      Serial.print("controller signal:");      //Serial print the original input value
+      Serial.print(output);
+      Serial.print(" | ");
+      
+     Serial.print("\n");
     
     esc.writeMicroseconds(output);                          //The state of ESC will be the same as the state/position of Joystick
   
-   
+    T2=micros();
+    Ts=(T2-T1)/1000000.0;
+
 }
