@@ -30,7 +30,13 @@ g = tfest(data1,3,1);   % getting the transfer function and storing it in g
 transfer_fn = tf([g.Numerator],[g.Denominator]);
 x = step(transfer_fn);
 figure
-plot(t,x)
+%plot(t,x)
 
-tf_z=c2d(transfer_fn,0.01,'tustin')
+tf_z=c2d(transfer_fn,0.01,'tustin');
 input = a(:,1);
+
+
+
+
+pid_tf = tf([12 12*0.9167],[1 0]);
+pid_tf_z=c2d(pid_tf,0.01,'tustin');
